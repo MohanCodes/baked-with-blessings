@@ -32,14 +32,14 @@ const Navbar: React.FC<NavbarProps> = ({ showOrderButton = true }) => {
             {/* Centered Title - Center */}
             <div className="flex justify-center">
                 <Link href="/">
-                    <Image src="/horiz.svg" alt="Logo" width={250} height={32} />
+                    <Image src="/horiz.svg" alt="Logo" width={250} height={32} className='max-w-[200px]' />
                 </Link>
             </div>
 
             {/* Order Button - Right */}
             <div className="flex justify-end">
                 <Link href="/order">
-                    <button className="px-4 py-2 text-white bg-black rounded hover:bg-gray-800 focus:outline-none">
+                    <button className="px-3 py-2 text-white bg-black rounded hover:bg-gray-800 focus:outline-none">
                         Order
                     </button>
                 </Link>

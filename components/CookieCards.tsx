@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function CookieCard() {
     return (
-        <div className="bg-[#FFF8E2] rounded-lg p-8 m-16 flex flex-col items-center">
+        <div className="bg-[#FFF8E2] rounded-lg p-8 md:m-16 flex flex-col items-center">
             <h2 className="text-5xl md:text-7xl italic mb-4 text-center">Flavors of the Month</h2>
             <p className="text-center text-lg mb-18">
                 Here is our curated selection of cookies for the month of April!
