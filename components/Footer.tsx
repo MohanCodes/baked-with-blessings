@@ -6,16 +6,16 @@ import { FaInstagram, FaEnvelope } from 'react-icons/fa';
 const Footer: React.FC = () => {
     return (
         <footer className="bg-[#FFE0AD] py-6">
-            <div className="container mx-auto flex items-center justify-between">
+            <div className="container mx-auto flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
                 {/* Logo */}
-                <div className="flex items-center">
+                <div className="flex items-center justify-center md:justify-start">
                     <Link href="/" aria-label="Home">
                         <Image src="/sheep.svg" alt="Logo" width={70} height={70} />
                     </Link>
                 </div>
 
                 {/* Links */}
-                <div className="flex justify-center space-x-8 text-black">
+                <div className="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-8 text-black text-center">
                     <Link href="/terms" className="hover:text-gray-800">
                         Terms
                     </Link>
@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Social Icons */}
-                <div className="flex items-center space-x-4">
+                <div className="flex justify-center md:justify-end items-center space-x-4">
                     <Link
                         href="https://instagram.com"
                         target="_blank"
