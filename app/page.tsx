@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 const Home = () => {
   return (
     <div>
-        <Navbar showOrderButton={true} />
+        <Navbar showOrderButton={false} />
         <Main />
         <CookieCard />
         <Footer />
