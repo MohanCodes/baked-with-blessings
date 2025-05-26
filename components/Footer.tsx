@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { FaInstagram, FaEnvelope, FaHeart } from 'react-icons/fa';
 
 const Footer: React.FC = () => {
     return (
@@ -52,6 +52,12 @@ const Footer: React.FC = () => {
                         <FaEnvelope className="w-6 h-6" />
                     </Link>
                 </div>
+            </div>
+            {/* Made with heart by Mohan */}
+            <div className=" flex items-center justify-center text-black text-sm">
+                Made with
+                <FaHeart className="mx-1 text-red-500" aria-label="love" />
+                by Mohan
             </div>
         </footer>
     );

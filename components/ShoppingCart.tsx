@@ -35,7 +35,7 @@ const initialState: CartState = {
     isOpen: false,
 };
 
-// Helper for custom pricing
+// Helper for pricing
 export function getItemPrice(quantity: number) {
     return 4.99 * quantity;
 }
@@ -146,70 +146,96 @@ export default function ShoppingCart() {
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-lg p-6 sticky top-16">
-            <h3 className="text-2xl font-semibold mb-4">Your Cart</h3>
-            {state.items.length === 0 ? (
-                <div>
-                    <p className="text-gray-500">Your cart is empty!</p>
-                    <button
-                        className="text-black underline mt-2 inline-block"
-                        onClick={() => handleOrderNow()}
-                    >
-                        Browse our cookies
-                    </button>
-                </div>
-            ) : (
-                <>
-                    <div className="space-y-4">
-                        {state.items.map((item) => (
-                            <div key={item.id} className="flex items-center justify-between">
-                                <div className="flex items-center space-x-3">
-                                    <div className="w-14 h-14 relative rounded overflow-hidden">
-                                        <Image src={item.image} alt={item.name} fill className="object-cover" />
-                                    </div>
-                                    <div>
-                                        <h3 className="font-medium">{item.name}</h3>
-                                        <p className="text-gray-500">${getItemPrice(item.quantity).toFixed(2)}</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <button
-                                        onClick={() => dispatch({
-                                            type: 'UPDATE_QUANTITY',
-                                            payload: { id: item.id, quantity: Math.max(0, item.quantity - 1) }
-                                        })}
-                                        className="px-2 py-1 bg-gray-100 rounded"
-                                    >
-                                        <FaMinus />
-                                    </button>
-                                    <span>{item.quantity}</span>
-                                    <button
-                                        onClick={() => dispatch({
-                                            type: 'UPDATE_QUANTITY',
-                                            payload: { id: item.id, quantity: item.quantity + 1 }
-                                        })}
-                                        className="px-2 py-1 bg-gray-100 rounded"
-                                    >
-                                        <FaPlus />
-                                    </button>
-                                    <button
-                                        onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.id })}
-                                        className="ml-2 text-red-500"
-                                    >
-                                        <FaTrash />
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
+        <div className='sticky top-16'>
+            <div className="bg-white rounded-lg shadow-lg p-6">
+                <h3 className="text-2xl font-semibold mb-4">Your Cart</h3>
+                {state.items.length === 0 ? (
+                    <div>
+                        <p className="text-gray-500">Your cart is empty!</p>
+                        <button
+                            className="text-black underline mt-2 inline-block"
+                            onClick={() => handleOrderNow()}
+                        >
+                            Browse our cookies
+                        </button>
                     </div>
-                    <div className="mt-6 border-t pt-4">
-                        <div className="flex justify-between text-lg font-semibold">
-                            <span>Total:</span>
-                            <span>${state.total.toFixed(2)}</span>
+                ) : (
+                    <>
+                        <div className="space-y-4">
+                            {state.items.map((item) => (
+                                <div key={item.id} className="flex items-center justify-between">
+                                    <div className="flex items-center space-x-3">
+                                        <div className="w-14 h-14 relative rounded overflow-hidden">
+                                            <Image src={item.image} alt={item.name} fill className="object-cover" />
+                                        </div>
+                                        <div>
+                                            <h3 className="font-medium">{item.name}</h3>
+                                            <p className="text-gray-500">${getItemPrice(item.quantity).toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <button
+                                            onClick={() => dispatch({
+                                                type: 'UPDATE_QUANTITY',
+                                                payload: { id: item.id, quantity: Math.max(0, item.quantity - 1) }
+                                            })}
+                                            className="px-2 py-1 bg-gray-100 rounded"
+                                        >
+                                            <FaMinus />
+                                        </button>
+                                        <span>{item.quantity}</span>
+                                        <button
+                                            onClick={() => dispatch({
+                                                type: 'UPDATE_QUANTITY',
+                                                payload: { id: item.id, quantity: item.quantity + 1 }
+                                            })}
+                                            className="px-2 py-1 bg-gray-100 rounded"
+                                        >
+                                            <FaPlus />
+                                        </button>
+                                        <button
+                                            onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.id })}
+                                            className="ml-2 text-red-500"
+                                        >
+                                            <FaTrash />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                    </div>
-                </>
-            )}
+                        <div className="mt-6 border-t pt-4">
+                            <div className="flex justify-between text-lg font-semibold">
+                                <span>Total:</span>
+                                <span>${state.total.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </>
+                )}
+            </div>
+            <PickupInfoCard />
+        </div>
+    );
+}
+
+// Add pickup info card below the cart
+export function PickupInfoCard() {
+    return (
+        <div className="bg-white rounded-lg shadow-lg p-6 mt-6">
+            <h3 className="text-xl font-semibold mb-2">Pickup Information</h3>
+            <p className="text-sm text-gray-600 mb-2">
+                <strong>Pickup Location:</strong><br />
+                West Metro Chinese Church<br />
+                6015 Penn Ave S<br />
+                Minneapolis, MN 55419
+            </p>
+            <p className="text-sm text-gray-600 mb-2">
+                <strong>Regular Pickup Times:</strong><br />
+                Fridays: 7:00 PM - 9:00 PM<br />
+                Sundays: 10:00 AM - 1:00 PM
+            </p>
+            <p className="text-sm text-gray-600">
+                <strong>Payment in person! Please have your order email ready.</strong>
+            </p>
         </div>
     );
 } 

@@ -1,7 +1,7 @@
 "use client";
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
+import { FaAngleLeft, FaAngleRight, FaCheck } from 'react-icons/fa';
 import { useCart } from './ShoppingCart';
 
 // Define TypeScript interface for cookie data
@@ -27,7 +27,15 @@ const cookiesData: Cookie[] = [
         image: "/cookies/str_mat.png",
         gallery: ["/cookies/mat-1.jpeg", "/cookies/mat-2.jpeg", "/cookies/mat-3.jpeg"],
         backgroundColor: "#fbc2d1",
-        ingredients: ["Matcha Powder", "Strawberries", "White Chocolate", "Strawberry Icing", "Flour", "Sugar", "Butter"],
+        ingredients: [
+            "Butter",
+            "Sugar",
+            "Eggs",
+            "Flour",
+            "Matcha powder",
+            "Freeze dried strawberries",
+            "White chocolate chips"
+        ],
         allergens: ["Gluten", "Dairy", "Eggs"]
     },
     {
@@ -37,9 +45,18 @@ const cookiesData: Cookie[] = [
         extendedDescription: "Our signature Biscoff cookie features a rich brown butter base that creates the perfect foundation for this indulgent treat. We fold in premium white chocolate chips and crushed Biscoff cookies for texture, then fill each cookie with creamy cookie butter that melts in your mouth. The combination of caramelized flavors and smooth textures makes this a customer favorite.",
         image: "/cookies/bis.png",
         gallery: ["/cookies/bis-1.jpeg", "/cookies/bis-2.jpeg", "/cookies/bis-3.jpeg"],
-        backgroundColor: "#FFE0AD",
-        ingredients: ["Brown Butter", "White Chocolate", "Biscoff Cookies", "Cookie Butter", "Flour", "Sugar", "Eggs"],
-        allergens: ["Gluten", "Dairy", "Eggs", "Soy"]
+        backgroundColor: "#ffe0ad",
+        ingredients: [
+            "Butter",
+            "Sugar",
+            "Eggs",
+            "Flour",
+            "Cookie butter",
+            "Biscoff cookies",
+            "White chocolate chips",
+            "Salt"
+        ],
+        allergens: ["Gluten", "Dairy", "Eggs"]
     },
     {
         id: 3,
@@ -49,7 +66,18 @@ const cookiesData: Cookie[] = [
         image: "/cookies/blu_che.png",
         gallery: ["/cookies/blu-1.jpeg", "/cookies/blu-2.jpeg", "/cookies/blu-3.jpeg"],
         backgroundColor: "#dbe5f7",
-        ingredients: ["Blueberries", "White Chocolate", "Graham Crackers", "Cream Cheese", "Blueberry Icing", "Flour", "Sugar"],
+        ingredients: [
+            "Butter",
+            "Sugar",
+            "Eggs",
+            "Flour",
+            "Blueberry preserves",
+            "Homemade blueberry purée",
+            "White chocolate chips",
+            "Graham crackers",
+            "Salt",
+            "Cream cheese"
+        ],
         allergens: ["Gluten", "Dairy", "Eggs"]
     },
 ];
@@ -58,6 +86,8 @@ export default function CookieCard() {
     const [selectedCookie, setSelectedCookie] = useState<Cookie | null>(null);
     const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
     const { dispatch } = useCart();
+    const [addedId, setAddedId] = useState<number | null>(null);
+    const [modalAdded, setModalAdded] = useState(false);
 
     const openModal = (cookie: Cookie) => {
         setSelectedCookie(cookie);
@@ -87,6 +117,14 @@ export default function CookieCard() {
 
     const addToCart = (cookie: Cookie) => {
         dispatch({ type: 'ADD_ITEM', payload: cookie });
+        setAddedId(cookie.id);
+        setTimeout(() => setAddedId(null), 2000);
+    };
+
+    const addToCartModal = (cookie: Cookie) => {
+        dispatch({ type: 'ADD_ITEM', payload: cookie });
+        setModalAdded(true);
+        setTimeout(() => setModalAdded(false), 2000);
     };
 
     return (
@@ -123,9 +161,14 @@ export default function CookieCard() {
                                     </button>
                                     <button 
                                         onClick={() => addToCart(cookie)}
-                                        className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition"
+                                        className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition flex items-center justify-center min-w-[120px]"
+                                        disabled={addedId === cookie.id}
                                     >
-                                        Add to Cart
+                                        {addedId === cookie.id ? (
+                                            <><FaCheck className="mr-2" /> Added</>
+                                        ) : (
+                                            'Add to Cart'
+                                        )}
                                     </button>
                                 </div>
                             </div>
@@ -228,10 +271,15 @@ export default function CookieCard() {
                                 {/* Action Buttons */}
                                 <div className="flex space-x-4">
                                     <button 
-                                        onClick={() => addToCart(selectedCookie)}
-                                        className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition"
+                                        onClick={() => addToCartModal(selectedCookie)}
+                                        className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition flex items-center justify-center min-w-[120px]"
+                                        disabled={modalAdded}
                                     >
-                                        Add to Cart
+                                        {modalAdded ? (
+                                            <><FaCheck className="mr-2" /> Added</>
+                                        ) : (
+                                            'Add to Cart'
+                                        )}
                                     </button>
                                     <button onClick={closeModal} className="px-6 py-3 border-2 border-black text-black rounded-lg hover:bg-black hover:text-white transition">
                                         Close

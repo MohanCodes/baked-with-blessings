@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useMemo } from 'react';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer'
 import ShoppingCart from '@/components/ShoppingCart';
 import { useCart, getItemPrice } from '@/components/ShoppingCart';
 
@@ -100,9 +101,10 @@ const OrderPage = () => {
     };
 
     const formatOrderDetails = (items: any[]) => {
-        return items.map(item => 
-            `${item.name} (Quantity: ${item.quantity}) - $${getItemPrice(item.quantity).toFixed(2)}`
-        ).join('\n');
+        return items.map(item => {
+            const price = getItemPrice(item.quantity);
+            return `${item.name} (Quantity: ${item.quantity}) - $${price.toFixed(2)}`;
+        }).join('\n');
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -151,23 +153,7 @@ const OrderPage = () => {
 
                     {/* Checkout Form Section */}
                     <div className="bg-white rounded-lg shadow-lg p-6">
-                        <h3 className="text-2xl font-semibold mb-6">Pickup Information</h3>
-                        <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-                            <p className="text-sm text-gray-600">
-                                <strong>Pickup Location:</strong><br />
-                                West Metro Chinese Church<br />
-                                6015 Penn Ave S<br />
-                                Minneapolis, MN 55419
-                            </p>
-                            <p className="text-sm text-gray-600 mt-4">
-                                <strong>Regular Pickup Times:</strong><br />
-                                Fridays: 7:00 PM - 9:00 PM<br />
-                                Sundays: 10:00 AM - 1:00 PM
-                            </p>
-                            <p className="text-sm text-gray-600 mt-4">
-                                <strong>Payment in person! Please have your order email ready.</strong><br />
-                            </p>
-                        </div>
+                        <h3 className="text-2xl font-semibold mb-6">Order Information</h3>
 
                         {submitStatus.type && (
                             <div className={`mb-6 p-4 rounded-lg ${
@@ -262,6 +248,11 @@ const OrderPage = () => {
                                 />
                             </div>
 
+                            <div className="flex justify-between text-lg font-semibold mb-4">
+                                <span>Total:</span>
+                                <span>${state.total.toFixed(2)}</span>
+                            </div>
+
                             <button
                                 type="submit"
                                 disabled={isSubmitting || state.items.length === 0}
@@ -274,6 +265,7 @@ const OrderPage = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 };
