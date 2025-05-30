@@ -25,7 +25,7 @@ const cookiesData: Cookie[] = [
         shortDescription: "Marbled strawberry and matcha cookie base with white chocolate chips and strawberry icing drizzle",
         extendedDescription: "Experience the perfect fusion of East meets West with our Strawberry Matcha cookie. This visually stunning treat features a beautifully marbled cookie base that combines the earthy, sophisticated flavor of premium matcha with sweet, fruity strawberry. White chocolate chips add richness while a delicate strawberry icing drizzle provides the perfect finishing touch. Each bite offers a unique balance of flavors that's both refreshing and indulgent.",
         image: "/cookies/str_mat.png",
-        gallery: ["/cookies/mat-1.jpeg", "/cookies/mat-2.jpeg", "/cookies/mat-3.jpeg"],
+        gallery: ["/cookies/mat-2.jpeg", "/cookies/mat-3.jpeg"],
         backgroundColor: "#fbc2d1",
         ingredients: [
             "Butter",
@@ -44,7 +44,7 @@ const cookiesData: Cookie[] = [
         shortDescription: "Brown butter base with white chocolate, Biscoff cookies, and filled with cookie butter!",
         extendedDescription: "Our signature Biscoff cookie features a rich brown butter base that creates the perfect foundation for this indulgent treat. We fold in premium white chocolate chips and crushed Biscoff cookies for texture, then fill each cookie with creamy cookie butter that melts in your mouth. The combination of caramelized flavors and smooth textures makes this a customer favorite.",
         image: "/cookies/bis.png",
-        gallery: ["/cookies/bis-1.jpeg", "/cookies/bis-2.jpeg", "/cookies/bis-3.jpeg"],
+        gallery: ["/cookies/bis-2.jpeg", "/cookies/bis-3.jpeg"],
         backgroundColor: "#ffe0ad",
         ingredients: [
             "Butter",
@@ -64,7 +64,7 @@ const cookiesData: Cookie[] = [
         shortDescription: "Blueberry, white chocolate, Graham crackers, filled blueberry cream cheese and topped with a blueberry icing!",
         extendedDescription: "Transport yourself to dessert heaven with our Blueberry Cheesecake cookie. We start with a tender cookie base infused with real blueberries and white chocolate chips, then add crushed graham crackers for that authentic cheesecake crust flavor. Each cookie is filled with a luscious blueberry cream cheese center and finished with a glossy blueberry icing that perfectly balances sweet and tart flavors.",
         image: "/cookies/blu_che.png",
-        gallery: ["/cookies/blu-1.jpeg", "/cookies/blu-2.jpeg", "/cookies/blu-3.jpeg"],
+        gallery: ["/cookies/blu-2.jpeg", "/cookies/blu-3.jpeg"],
         backgroundColor: "#dbe5f7",
         ingredients: [
             "Butter",

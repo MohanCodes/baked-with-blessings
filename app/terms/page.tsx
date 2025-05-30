@@ -17,7 +17,6 @@ export default function TermsOfService() {
         <section className="mb-6">
           <h3 className="text-2xl font-semibold mb-2">2. Orders & Payment</h3>
           <ul className="list-disc ml-6">
-            <li>All orders must be placed through our website.</li>
             <li>Payment is due in person at the time of pickup. We accept cash and other payment methods as listed at pickup.</li>
             <li>Order details, including pickup date and time, must be confirmed at checkout.</li>
           </ul>
