@@ -1,0 +1,88 @@
+<!-- This is here just for easy editing, make sure to update the emailjs template as well -->
+
+<div
+  style="
+    font-family: system-ui, sans-serif, Arial;
+    font-size: 15px;
+    color: #222;
+    padding: 0;
+    background-color: #FFF8E2;
+  "
+>
+  <div style="max-width: 600px; margin: 32px auto; background-color: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); overflow: hidden;">
+    <div style="border-top: 6px solid #000; padding: 20px 24px 12px 24px; display: flex; align-items: center;">
+      <a
+        style="text-decoration: none; outline: none; margin-right: 12px; vertical-align: middle"
+        href="https://bakedwithblessings.com"
+        target="_blank"
+      >
+        <img
+          style="height: 40px; vertical-align: middle"
+          height="40px"
+          src="https://bakedwithblessings.com/logo/horiz.png"
+          alt="Baked with Blessings logo"
+        />
+      </a>
+    </div>
+    <div style="padding: 0 24px 24px 24px;">
+      <h2 style="font-size: 1.5em; font-weight: bold; color: #000; margin: 24px 0 8px 0;">Thank You for Your Order!</h2>
+      <p style="margin: 0 0 16px 0; color: #444;">We look forward to seeing you at pickup. Please have this email ready when you arrive. Have cash or venmo ready.</p>
+      <div style="background: #FFF8E2; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+        <strong style="font-size: 1.1em; color: #000;">Pickup Details</strong>
+        <div style="margin-top: 8px;">
+          <div><strong>Date:</strong> {{pickupDate}}</div>
+          <div><strong>Time:</strong> {{pickupTime}}</div>
+          <div><strong>Location:</strong> West Metro Chinese Church, 6015 Penn Ave S, Minneapolis, MN 55419</div>
+        </div>
+      </div>
+      <div style="background: #f7f7f7; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+        <strong style="font-size: 1.1em; color: #000;">Customer Information</strong>
+        <div style="margin-top: 8px;">
+          <div><strong>Name:</strong> {{name}}</div>
+          <div><strong>Email:</strong> {{email}}</div>
+          <div><strong>Phone:</strong> {{phone}}</div>
+        </div>
+      </div>
+      {{#specialInstructions}}
+      <div style="background: #fffbe6; border-radius: 8px; padding: 16px; margin-bottom: 20px; border: 1px solid #ffe58f;">
+        <strong style="font-size: 1.1em; color: #b38f00;">Comments</strong>
+        <div style="margin-top: 8px; color: #b38f00;">{{specialInstructions}}</div>
+      </div>
+      {{/specialInstructions}}
+      <div style="text-align: left; font-size: 15px; padding-bottom: 4px; border-bottom: 2px solid #000; margin-bottom: 12px;">
+        <strong>Order Summary</strong>
+      </div>
+      {{#orders}}
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 8px;">
+        <tr style="vertical-align: top">
+          <td style="padding: 12px 8px 0 0; width: 60px;">
+            <img style="height: 48px; border-radius: 6px;" height="48px" src="{{image_url}}" alt="item" />
+          </td>
+          <td style="padding: 12px 8px 0 0;">
+            <div style="font-weight: 500;">{{name}}</div>
+            <div style="font-size: 14px; color: #888; padding-top: 2px">QTY: {{units}}</div>
+          </td>
+          <td style="padding: 12px 0 0 0; text-align: right; white-space: nowrap;">
+            <strong>${{price}}</strong>
+          </td>
+        </tr>
+      </table>
+      {{/orders}}
+      <div style="padding: 16px 0 0 0; border-top: 2px solid #000; margin-top: 16px;">
+        <table style="width: 100%; border-collapse: collapse; text-align: right;">
+          <tr>
+            <td style="width: 60%"></td>
+            <td style="font-size: 1.1em; color: #000;"><strong>Order Total</strong></td>
+            <td style="padding: 8px; white-space: nowrap; font-size: 1.1em; color: #000;"><strong>${{cost.total}}</strong></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div style="max-width: 600px; margin: 24px auto 0 auto; text-align: center;">
+    <p style="color: #999; font-size: 13px;">
+      This email was sent to {{email}}<br />
+      You received this email because you placed an order at Baked with Blessings.
+    </p>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer'
 import ShoppingCart from '@/components/ShoppingCart';
 import { useCart, getItemPrice } from '@/components/ShoppingCart';
+import emailjs from '@emailjs/browser';
 
 interface CheckoutForm {
     name: string;
@@ -46,13 +47,14 @@ const getNextPickupDates = () => {
 
 const getTimeSlots = (dateStr: string) => {
     if (!dateStr) return [];
-    const date = new Date(dateStr);
-    const day = date.getDay();
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const date = new Date(year, month - 1, day);
+    const dayOfWeek = date.getDay();
     let startHour, endHour;
-    if (day === 5) { // Friday
+    if (dayOfWeek === 5) { // Friday
         startHour = 19; // 7 PM
         endHour = 21;   // 9 PM
-    } else if (day === 0) { // Sunday
+    } else if (dayOfWeek === 0) { // Sunday
         startHour = 10; // 10 AM
         endHour = 13;   // 1 PM
     } else {
@@ -61,8 +63,7 @@ const getTimeSlots = (dateStr: string) => {
     const slots = [];
     for (let hour = startHour; hour < endHour; hour++) {
         for (let min = 0; min < 60; min += 20) {
-            const d = new Date(dateStr);
-            d.setHours(hour, min, 0, 0);
+            const d = new Date(year, month - 1, day, hour, min, 0, 0);
             slots.push({
                 value: d.toTimeString().slice(0,5),
                 label: d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
@@ -90,13 +91,13 @@ const OrderPage = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
+        setFormData((prev: CheckoutForm) => ({
             ...prev,
             [name]: value
         }));
         // Reset pickupTime if pickupDate changes
         if (name === 'pickupDate') {
-            setFormData(prev => ({ ...prev, pickupTime: '' }));
+            setFormData((prev: CheckoutForm) => ({ ...prev, pickupTime: '' }));
         }
     };
 
@@ -113,12 +114,38 @@ const OrderPage = () => {
         setSubmitStatus({ type: null, message: '' });
 
         try {
-            // Simulate order placement (no email logic)
-            await new Promise((resolve) => setTimeout(resolve, 500));
+            // Generate a random order ID (8 uppercase alphanumeric characters)
+            const orderId = Math.random().toString(36).substr(2, 8).toUpperCase();
+
+            // Format order details
+            const orderDetails = formatOrderDetails(state.items);
+
+            // Send email using EmailJS
+            await emailjs.send(
+                'service_bwb', // replace with your EmailJS service ID
+                'template_erbr2rd', // replace with your EmailJS template ID
+                {
+                    order_id: orderId,
+                    name: formData.name,
+                    email: formData.email,
+                    phone: formData.phone,
+                    pickupDate: formData.pickupDate,
+                    pickupTime: formData.pickupTime,
+                    specialInstructions: formData.specialInstructions,
+                    orders: state.items.map(item => ({
+                        name: item.name,
+                        units: item.quantity,
+                        price: getItemPrice(item.quantity).toFixed(2),
+                        image_url: item.image,
+                    })),
+                    total: state.total.toFixed(2),
+                },
+                'l0OYm0Q57_sqwnd3P' // replace with your EmailJS public key
+            );
 
             setSubmitStatus({
                 type: 'success',
-                message: 'Order placed successfully! (No email sent; SIMPLY FOR TESTING.)',
+                message: 'Order placed and email sent successfully!',
             });
 
             // Clear form and cart
@@ -211,7 +238,7 @@ const OrderPage = () => {
                                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black py-3 px-4"
                                         required
                                     >
-                                        {pickupDates.map((slot, index) => (
+                                        {pickupDates.map((slot: { value: string; label: string }, index: number) => (
                                             <option key={index} value={slot.value}>
                                                 {slot.label}
                                             </option>
@@ -237,7 +264,7 @@ const OrderPage = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">Special Instructions</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Comments</label>
                                 <textarea
                                     name="specialInstructions"
                                     value={formData.specialInstructions}

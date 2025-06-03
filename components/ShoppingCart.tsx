@@ -234,7 +234,7 @@ export function PickupInfoCard() {
                 Sundays: 10:00 AM - 1:00 PM
             </p>
             <p className="text-sm text-gray-600">
-                <strong>Payment in person! Please have your order email ready.</strong>
+                <strong>Payment in person! Please have your order email ready. Cash or venmo accepted.</strong>
             </p>
         </div>
     );
