@@ -202,6 +202,8 @@ const OrderPage = () => {
                                     onChange={handleInputChange}
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black py-3 px-4"
                                     required
+                                    pattern="^[A-Za-z\s'-]{2,}$"
+                                    title="Please enter a valid name (letters, spaces, apostrophes, and hyphens only)"
                                 />
                             </div>
 
@@ -226,6 +228,8 @@ const OrderPage = () => {
                                     onChange={handleInputChange}
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-black focus:ring-black py-3 px-4"
                                     required
+                                    pattern="^(\+?1\s?)?(\([0-9]{3}\)|[0-9]{3})[\s.-]?[0-9]{3}[\s.-]?[0-9]{4}$"
+                                    title="Please enter a valid US phone number (e.g., 123-456-7890)"
                                 />
                             </div>
 
