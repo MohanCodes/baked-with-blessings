@@ -138,7 +138,9 @@ const OrderPage = () => {
                         price: getItemPrice(item.quantity).toFixed(2),
                         image_url: item.image,
                     })),
-                    total: state.total.toFixed(2),
+                    cost: {
+                        total: state.total.toFixed(2)
+                    },
                 },
                 'l0OYm0Q57_sqwnd3P' // replace with your EmailJS public key
             );
