@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
                 </div>
             </div>
             {/* Made with heart by Mohan */}
-            <div className=" flex items-center justify-center text-black text-sm">
+            <div className=" flex items-center justify-center text-black text-sm sm:mt-0 mt-6">
                 Made with
                 <FaHeart className="mx-1 text-red-500" aria-label="love" />
                 by Mohan

@@ -129,7 +129,7 @@ export default function CookieCard() {
 
     return (
         <>
-            <div id="flavors-of-the-month" className="bg-[#FFF8E2] rounded-lg p-8 md:m-8 flex flex-col items-center">
+            <div id="flavors-of-the-month" className="bg-[#FFF8E2] rounded-lg p-8 md:m-8 flex flex-col items-center z-20">
                 <h2 className="text-5xl md:text-7xl italic mb-4 text-center">Flavors of the Month</h2>
                 <p className="text-center text-lg mb-18">
                     Here is our curated selection of cookies for the month of May!
