@@ -44,7 +44,7 @@ const cookiesData: Cookie[] = [
         shortDescription: "A sugar cookie base with Oreos and white chocolate chips and filled with a decadent cheesecake filling",
         extendedDescription: "Indulge in the perfect combination of cookies and cream with our Oreo Cheesecake cookie. We start with a classic sugar cookie base that's studded with crushed Oreos and white chocolate chips for texture and flavor. Each cookie is filled with a rich, creamy cheesecake filling that creates a delightful contrast of textures and tastes. This cookie is a true celebration of America's favorite cookie in a whole new form.",
         image: "/cookies/oreo.png",
-        gallery: ["/cookies/oreo-1.jpg", "/cookies/oreo-1.jpg"],
+        gallery: ["/cookies/oreo-2.jpg", "/cookies/oreo-3.jpg"],
         backgroundColor: "#e8e8e8",
         ingredients: [
             "Butter",
@@ -63,7 +63,7 @@ const cookiesData: Cookie[] = [
         shortDescription: "A brown butter banana cookie base with semi-sweet chocolate chips and toasted walnuts",
         extendedDescription: "Satisfy your sweet tooth with our Banana Choc-chip Walnut cookie, a perfect blend of classic flavors. We use ripe bananas and brown butter to create a moist, flavorful cookie base that's naturally sweet and aromatic. Semi-sweet chocolate chips add rich chocolatey goodness, while toasted walnuts provide a satisfying crunch and nutty flavor. This cookie is a delicious twist on traditional banana bread that's sure to become a new favorite.",
         image: "/cookies/banwal.png",
-        gallery: ["/cookies/banwal-1.jpg", "/cookies/banwal-1.jpg"],
+        gallery: ["/cookies/banwal-2.jpg", "/cookies/banwal-3.jpg"],
         backgroundColor: "#f7dc6f",
         ingredients: [
             "Bananas",
