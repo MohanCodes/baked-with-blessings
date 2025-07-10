@@ -21,64 +21,58 @@ export interface Cookie {
 const cookiesData: Cookie[] = [
     {
         id: 1,
-        name: "Strawberry Matcha",
-        shortDescription: "Marbled strawberry and matcha cookie base with white chocolate chips and strawberry icing drizzle",
-        extendedDescription: "Experience the perfect fusion of East meets West with our Strawberry Matcha cookie. This visually stunning treat features a beautifully marbled cookie base that combines the earthy, sophisticated flavor of premium matcha with sweet, fruity strawberry. White chocolate chips add richness while a delicate strawberry icing drizzle provides the perfect finishing touch. Each bite offers a unique balance of flavors that's both refreshing and indulgent.",
-        image: "/cookies/str_mat.png",
-        gallery: ["/cookies/mat-2.jpeg", "/cookies/mat-3.jpeg"],
-        backgroundColor: "#fbc2d1",
+        name: "Cinnamon Roll",
+        shortDescription: "A soft and chewy brown butter base with swirls of cinnamon filling and topped with brown butter icing",
+        extendedDescription: "Experience the warm, comforting flavors of a classic cinnamon roll in cookie form. Our Cinnamon Roll cookie features a soft and chewy brown butter base that provides the perfect foundation for generous swirls of cinnamon filling. Each cookie is finished with a decadent brown butter icing that melts in your mouth, creating the ultimate sweet and spicy treat that's perfect for any time of day.",
+        image: "/cookies/cin.png",
+        gallery: ["/cookies/cin-2.jpg", "/cookies/cin-3.jpg"],
+        backgroundColor: "#f4e4bc",
         ingredients: [
             "Butter",
             "Sugar",
             "Eggs",
             "Flour",
-            "Matcha powder",
-            "Freeze dried strawberries",
-            "White chocolate chips"
+            "Cinnamon",
+            "Powdered sugar",
+            "Milk"
         ],
         allergens: ["Gluten", "Dairy", "Eggs"]
     },
     {
         id: 2,
-        name: "Biscoff",
-        shortDescription: "Brown butter base with white chocolate, Biscoff cookies, and filled with cookie butter!",
-        extendedDescription: "Our signature Biscoff cookie features a rich brown butter base that creates the perfect foundation for this indulgent treat. We fold in premium white chocolate chips and crushed Biscoff cookies for texture, then fill each cookie with creamy cookie butter that melts in your mouth. The combination of caramelized flavors and smooth textures makes this a customer favorite.",
-        image: "/cookies/bis.png",
-        gallery: ["/cookies/bis-2.jpeg", "/cookies/bis-3.jpeg"],
-        backgroundColor: "#ffe0ad",
+        name: "Oreo Cheesecake",
+        shortDescription: "A sugar cookie base with Oreos and white chocolate chips and filled with a decadent cheesecake filling",
+        extendedDescription: "Indulge in the perfect combination of cookies and cream with our Oreo Cheesecake cookie. We start with a classic sugar cookie base that's studded with crushed Oreos and white chocolate chips for texture and flavor. Each cookie is filled with a rich, creamy cheesecake filling that creates a delightful contrast of textures and tastes. This cookie is a true celebration of America's favorite cookie in a whole new form.",
+        image: "/cookies/oreo.png",
+        gallery: ["/cookies/oreo-1.jpg", "/cookies/oreo-1.jpg"],
+        backgroundColor: "#e8e8e8",
         ingredients: [
             "Butter",
             "Sugar",
             "Eggs",
             "Flour",
-            "Cookie butter",
-            "Biscoff cookies",
-            "White chocolate chips",
-            "Salt"
+            "Oreos",
+            "Cream cheese",
+            "White chocolate chips"
         ],
         allergens: ["Gluten", "Dairy", "Eggs"]
     },
     {
         id: 3,
-        name: "Blueberry Cheesecake",
-        shortDescription: "Blueberry, white chocolate, Graham crackers, filled blueberry cream cheese and topped with a blueberry icing!",
-        extendedDescription: "Transport yourself to dessert heaven with our Blueberry Cheesecake cookie. We start with a tender cookie base infused with real blueberries and white chocolate chips, then add crushed graham crackers for that authentic cheesecake crust flavor. Each cookie is filled with a luscious blueberry cream cheese center and finished with a glossy blueberry icing that perfectly balances sweet and tart flavors.",
-        image: "/cookies/blu_che.png",
-        gallery: ["/cookies/blu-2.jpeg", "/cookies/blu-3.jpeg"],
-        backgroundColor: "#dbe5f7",
+        name: "Banana Choc-chip Walnut",
+        shortDescription: "A brown butter banana cookie base with semi-sweet chocolate chips and toasted walnuts",
+        extendedDescription: "Satisfy your sweet tooth with our Banana Choc-chip Walnut cookie, a perfect blend of classic flavors. We use ripe bananas and brown butter to create a moist, flavorful cookie base that's naturally sweet and aromatic. Semi-sweet chocolate chips add rich chocolatey goodness, while toasted walnuts provide a satisfying crunch and nutty flavor. This cookie is a delicious twist on traditional banana bread that's sure to become a new favorite.",
+        image: "/cookies/banwal.png",
+        gallery: ["/cookies/banwal-1.jpg", "/cookies/banwal-1.jpg"],
+        backgroundColor: "#f7dc6f",
         ingredients: [
+            "Bananas",
+            "Chocolate",
             "Butter",
-            "Sugar",
-            "Eggs",
             "Flour",
-            "Blueberry preserves",
-            "Homemade blueberry purée",
-            "White chocolate chips",
-            "Graham crackers",
-            "Salt",
-            "Cream cheese"
+            "Walnuts"
         ],
-        allergens: ["Gluten", "Dairy", "Eggs"]
+        allergens: ["Gluten", "Dairy", "Eggs", "Tree Nuts"]
     },
 ];
 
