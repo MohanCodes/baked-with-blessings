@@ -1,6 +1,6 @@
 # Baked With Blessings
 
-A modern cookie ordering web app built with Next.js and React.
+A modern cookie ordering web app built with Next.js and React for Angie and Kayla at https://www.instagram.com/_bakedwithblessings/.
 
 ## Getting Started
 
