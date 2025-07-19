@@ -122,8 +122,8 @@ const OrderPage = () => {
 
             // Send email using EmailJS
             await emailjs.send(
-                'service_bwb', // replace with your EmailJS service ID
-                'template_erbr2rd', // replace with your EmailJS template ID
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
                 {
                     order_id: orderId,
                     name: formData.name,
@@ -142,7 +142,7 @@ const OrderPage = () => {
                         total: state.total.toFixed(2)
                     },
                 },
-                'l0OYm0Q57_sqwnd3P' // replace with your EmailJS public key
+                process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
             );
 
             setSubmitStatus({
