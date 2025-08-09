@@ -15,8 +15,8 @@ export default function Main() {
       <Image
         src="/cookies/mainsection.png"
         alt="Main Section"
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: "cover" }}
         priority
         className="pointer-events-none rounded-b-[80px]"
       />

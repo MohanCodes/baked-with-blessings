@@ -35,9 +35,40 @@ const initialState: CartState = {
     isOpen: false,
 };
 
-// Helper for pricing
+// Helper for pricing - 3 cookies for $12
 export function getItemPrice(quantity: number) {
-    return 4.99 * quantity;
+    if (quantity === 0) return 0;
+    
+    // Calculate how many complete sets of 3 we have
+    const completeSets = Math.floor(quantity / 3);
+    // Calculate remaining individual cookies
+    const remainingCookies = quantity % 3;
+    
+    // Price for complete sets of 3 ($12 each)
+    const setPrice = completeSets * 12;
+    // Price for remaining individual cookies ($4.99 each)
+    const individualPrice = remainingCookies * 4.99;
+    
+    return setPrice + individualPrice;
+}
+
+// Helper to calculate total cart price with 3-for-$12 deal
+export function calculateCartTotal(items: CartItem[]): number {
+    const totalQuantity = items.reduce((sum, item) => sum + item.quantity, 0);
+    
+    if (totalQuantity === 0) return 0;
+    
+    // Calculate how many complete sets of 3 we have across all items
+    const completeSets = Math.floor(totalQuantity / 3);
+    // Calculate remaining individual cookies
+    const remainingCookies = totalQuantity % 3;
+    
+    // Price for complete sets of 3 ($12 each)
+    const setPrice = completeSets * 12;
+    // Price for remaining individual cookies ($4.99 each)
+    const individualPrice = remainingCookies * 4.99;
+    
+    return setPrice + individualPrice;
 }
 
 // Cart reducer
@@ -51,18 +82,17 @@ function cartReducer(state: CartState, action: CartAction): CartState {
                         ? { ...item, quantity: item.quantity + 1 }
                         : item
                 );
-                const updatedItem = newItems.find(item => item.id === action.payload.id)!;
                 return {
                     ...state,
                     items: newItems,
-                    total: newItems.reduce((sum, item) => sum + getItemPrice(item.quantity), 0),
+                    total: calculateCartTotal(newItems),
                 };
             }
             const newItems = [...state.items, { ...action.payload, quantity: 1 }];
             return {
                 ...state,
                 items: newItems,
-                total: newItems.reduce((sum, item) => sum + getItemPrice(item.quantity), 0),
+                total: calculateCartTotal(newItems),
             };
         }
         case 'REMOVE_ITEM': {
@@ -70,7 +100,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
             return {
                 ...state,
                 items: newItems,
-                total: newItems.reduce((sum, item) => sum + getItemPrice(item.quantity), 0),
+                total: calculateCartTotal(newItems),
             };
         }
         case 'UPDATE_QUANTITY': {
@@ -81,7 +111,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
             return {
                 ...state,
                 items: newItems,
-                total: newItems.reduce((sum, item) => sum + getItemPrice(item.quantity), 0),
+                total: calculateCartTotal(newItems),
             };
         }
         case 'CLEAR_CART':
@@ -170,7 +200,7 @@ export default function ShoppingCart() {
                                         </div>
                                         <div>
                                             <h3 className="font-medium">{item.name}</h3>
-                                            <p className="text-gray-500">${getItemPrice(item.quantity).toFixed(2)}</p>
+                                            <p className="text-gray-500">${(item.quantity * 4.99).toFixed(2)}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center space-x-2">
@@ -204,6 +234,9 @@ export default function ShoppingCart() {
                             ))}
                         </div>
                         <div className="mt-6 border-t pt-4">
+                            <div className="mb-2 text-sm text-gray-600">
+                                <p>💡 <strong>Special Deal:</strong> Any 3 cookies for $12!</p>
+                            </div>
                             <div className="flex justify-between text-lg font-semibold">
                                 <span>Total:</span>
                                 <span>${state.total.toFixed(2)}</span>
