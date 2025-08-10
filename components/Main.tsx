@@ -18,7 +18,7 @@ export default function Main() {
         fill
         style={{ objectFit: "cover" }}
         priority
-        className="pointer-events-none rounded-b-[80px]"
+        className="pointer-events-none rounded-b-[80px] brightness-50"
       />
       <div className="absolute top-0 left-0">
         <Image
