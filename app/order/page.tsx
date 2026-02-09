@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer'
 import ShoppingCart from '@/components/ShoppingCart';
@@ -23,8 +23,11 @@ const getNextPickupDates = () => {
         const friday = new Date(today);
         friday.setDate(today.getDate() + ((5 - today.getDay() + 7) % 7) + week * 7);
         if (friday > today) {
+            const year = friday.getFullYear();
+            const month = String(friday.getMonth() + 1).padStart(2, '0');
+            const day = String(friday.getDate()).padStart(2, '0');
             dates.push({
-                value: friday.toISOString().split('T')[0],
+                value: `${year}-${month}-${day}`,
                 label: friday.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }),
                 day: 'friday',
             });
@@ -33,8 +36,11 @@ const getNextPickupDates = () => {
         const sunday = new Date(today);
         sunday.setDate(today.getDate() + ((0 - today.getDay() + 7) % 7) + week * 7);
         if (sunday > today) {
+            const year = sunday.getFullYear();
+            const month = String(sunday.getMonth() + 1).padStart(2, '0');
+            const day = String(sunday.getDate()).padStart(2, '0');
             dates.push({
-                value: sunday.toISOString().split('T')[0],
+                value: `${year}-${month}-${day}`,
                 label: sunday.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }),
                 day: 'sunday',
             });
@@ -47,9 +53,11 @@ const getNextPickupDates = () => {
 
 const getTimeSlots = (dateStr: string) => {
     if (!dateStr) return [];
-    const [year, month, day] = dateStr.split('-').map(Number);
-    const date = new Date(year, month - 1, day);
+    
+    // Parse the date string properly
+    const date = new Date(dateStr + 'T12:00:00'); // Add time to avoid timezone issues
     const dayOfWeek = date.getDay();
+    
     let startHour, endHour;
     if (dayOfWeek === 5) { // Friday
         startHour = 19; // 7 PM
@@ -60,13 +68,21 @@ const getTimeSlots = (dateStr: string) => {
     } else {
         return [];
     }
+    
     const slots = [];
     for (let hour = startHour; hour < endHour; hour++) {
         for (let min = 0; min < 60; min += 20) {
-            const d = new Date(year, month - 1, day, hour, min, 0, 0);
+            const hours24 = hour.toString().padStart(2, '0');
+            const minutes = min.toString().padStart(2, '0');
+            const timeValue = `${hours24}:${minutes}`;
+            
+            // Create a proper date for formatting
+            const [year, month, day] = dateStr.split('-').map(Number);
+            const d = new Date(year, month - 1, day, hour, min);
+            
             slots.push({
-                value: d.toTimeString().slice(0,5),
-                label: d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                value: timeValue,
+                label: d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
             });
         }
     }
@@ -80,25 +96,32 @@ const OrderPage = () => {
         name: '',
         email: '',
         phone: '',
-        pickupDate: pickupDates[0]?.value || '',
+        pickupDate: '',
         pickupTime: '',
         specialInstructions: ''
     });
     const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // Set initial pickup date after pickupDates are computed
+    useEffect(() => {
+        if (pickupDates.length > 0 && !formData.pickupDate) {
+            setFormData(prev => ({ ...prev, pickupDate: pickupDates[0].value }));
+        }
+    }, [pickupDates, formData.pickupDate]);
+
     const timeSlots = useMemo(() => getTimeSlots(formData.pickupDate), [formData.pickupDate]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData((prev: CheckoutForm) => ({
-            ...prev,
-            [name]: value
-        }));
-        // Reset pickupTime if pickupDate changes
-        if (name === 'pickupDate') {
-            setFormData((prev: CheckoutForm) => ({ ...prev, pickupTime: '' }));
-        }
+        setFormData((prev: CheckoutForm) => {
+            const updated = { ...prev, [name]: value };
+            // Reset pickupTime if pickupDate changes
+            if (name === 'pickupDate') {
+                updated.pickupTime = '';
+            }
+            return updated;
+        });
     };
 
     const formatOrderDetails = (items: any[]) => {
@@ -173,7 +196,7 @@ const OrderPage = () => {
     return (
         <div className="min-h-screen flex flex-col bg-[#FFF8E2]">
             <Navbar showOrderButton={false} homeButton={true} />
-            <div className="container mx-auto px-4 py-8 mt-8">
+            <div className="flex-grow container mx-auto px-4 py-8 mt-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Shopping Cart Section */}
                     <div>

@@ -21,31 +21,33 @@ export interface Cookie {
 const cookiesData: Cookie[] = [
     {
         id: 1,
-        name: "Cinnamon Roll",
-        shortDescription: "A soft and chewy brown butter base with swirls of cinnamon filling and topped with brown butter icing",
-        extendedDescription: "Experience the warm, comforting flavors of a classic cinnamon roll in cookie form. Our Cinnamon Roll cookie features a soft and chewy brown butter base that provides the perfect foundation for generous swirls of cinnamon filling. Each cookie is finished with a decadent brown butter icing that melts in your mouth, creating the ultimate sweet and spicy treat that's perfect for any time of day.",
-        image: "/cookies/cin.png",
-        gallery: ["/cookies/cin-2.jpg", "/cookies/cin-3.jpg"],
-        backgroundColor: "#f4e4bc",
+        name: "Banana Crumble",
+        shortDescription: "A brown butter banana cookie topped with cinnamon cream cheese frosting, buttery crumble, and drizzled with banana caramel.",
+        extendedDescription: "Indulge in a delightful combination of warm, nutty flavors in our Banana Crumble cookie. Our cookie base is made with a rich, buttery brown butter and softened butter, giving it a comforting and tender texture. The banana flavor is brought to life with a sweet and creamy cinnamon cream cheese frosting. To top it off, each cookie is topped with a crumbly buttery crumble and drizzled with a sweet and smooth banana caramel. This cookie is the perfect combination of warmth and sweetness, making it a perfect treat for any time of day.",
+        image: "/cookies/ban-cru.png",
+        gallery: ["/cookies/ban-cru-1.jpg", "/cookies/ban-cru-2.jpg", "/cookies/ban-cru-3.jpg"],
+        backgroundColor: "#f7dc6f",
         ingredients: [
+            "Bananas",
+            "Cream cheese",
             "Butter",
-            "Sugar",
-            "Eggs",
             "Flour",
             "Cinnamon",
-            "Powdered sugar",
-            "Milk"
+            "Sugar",
+            "Eggs",
+            "Cream cheese",
+            "Cocoa powder"
         ],
-        allergens: ["Gluten", "Dairy", "Eggs"]
+        allergens: ["Gluten", "Dairy", "Eggs", "Tree Nuts"]
     },
     {
         id: 2,
-        name: "Oreo Cheesecake",
-        shortDescription: "A sugar cookie base with Oreos and white chocolate chips and filled with a decadent cheesecake filling",
-        extendedDescription: "Indulge in the perfect combination of cookies and cream with our Oreo Cheesecake cookie. We start with a classic sugar cookie base that's studded with crushed Oreos and white chocolate chips for texture and flavor. Each cookie is filled with a rich, creamy cheesecake filling that creates a delightful contrast of textures and tastes. This cookie is a true celebration of America's favorite cookie in a whole new form.",
-        image: "/cookies/oreo.png",
-        gallery: ["/cookies/oreo-2.jpg", "/cookies/oreo-3.jpg"],
-        backgroundColor: "#e8e8e8",
+        name: "Red Velvet Cheesecake",
+        shortDescription: "A rich red velvet cookie loaded with white chocolate, Oreos, and creamy cheesecake filling.",
+        extendedDescription: "Treat your taste buds to a delightful combination of rich and creamy flavors in our Red Velvet Cheesecake cookie. We start with a classic red velvet cookie base that's rich and decadent, loaded with a creamy cheesecake filling that melts in your mouth. The cookie is studded with crushed Oreos and finished with a smooth layer of white chocolate that adds a velvety texture to the cookie. This cookie is a true celebration of America's favorite dessert in a whole new form.",
+        image: "/cookies/red-vel.png",
+        gallery: ["/cookies/red-vel-1.jpg", "/cookies/red-vel-2.jpg", "/cookies/red-vel-3.jpg"],
+        backgroundColor: "#f7e1d1",
         ingredients: [
             "Butter",
             "Sugar",
@@ -53,26 +55,28 @@ const cookiesData: Cookie[] = [
             "Flour",
             "Oreos",
             "Cream cheese",
-            "White chocolate chips"
+            "White chocolate"
         ],
         allergens: ["Gluten", "Dairy", "Eggs"]
     },
     {
         id: 3,
-        name: "Banana Choc-chip Walnut",
-        shortDescription: "A brown butter banana cookie base with semi-sweet chocolate chips and toasted walnuts",
-        extendedDescription: "Satisfy your sweet tooth with our Banana Choc-chip Walnut cookie, a perfect blend of classic flavors. We use ripe bananas and brown butter to create a moist, flavorful cookie base that's naturally sweet and aromatic. Semi-sweet chocolate chips add rich chocolatey goodness, while toasted walnuts provide a satisfying crunch and nutty flavor. This cookie is a delicious twist on traditional banana bread that's sure to become a new favorite.",
-        image: "/cookies/banwal.png",
-        gallery: ["/cookies/banwal-2.jpg", "/cookies/banwal-3.jpg"],
-        backgroundColor: "#f7dc6f",
+        name: "Dubai Chewy Cookie",
+        shortDescription: "A chewy marshmallow cookie filled with pistachio cream and crunchy Knafeh, dusted with cocoa powder for the perfect balance of sweet and rich.",
+        extendedDescription: "Experience the perfect balance of sweet and rich in our Dubai Chewy Cookie. We start with a chewy marshmallow cookie base that's filled with a rich and creamy pistachio cream. The cookie is also crunchy with crispy Knafeh, a popular Dubai street snack made from fried fish scales. Each cookie is dusted with a light layer of cocoa powder for added flavor and texture. This cookie is a true celebration of the Middle Eastern flavors that Dubai is known for.",
+        image: "/cookies/dubai.png",
+        gallery: ["/cookies/dubai-1.jpg", "/cookies/dubai-2.jpg", "/cookies/dubai-3.jpg"],
+        backgroundColor: "#cde5c7",
         ingredients: [
-            "Bananas",
-            "Chocolate",
+            "Marshmallows",
+            "Pistachios",
+            "Cream cheese",
             "Butter",
             "Flour",
-            "Walnuts"
+            "Knafeh",
+            "Cocoa powder"
         ],
-        allergens: ["Gluten", "Dairy", "Eggs", "Tree Nuts"]
+        allergens: ["Gluten", "Dairy", "Eggs", "Peanuts", "Tree Nuts"]
     },
 ];
 
@@ -112,13 +116,13 @@ export default function CookieCard() {
     const addToCart = (cookie: Cookie) => {
         dispatch({ type: 'ADD_ITEM', payload: cookie });
         setAddedId(cookie.id);
-        setTimeout(() => setAddedId(null), 2000);
+        setTimeout(() => setAddedId(null), 800);
     };
 
     const addToCartModal = (cookie: Cookie) => {
         dispatch({ type: 'ADD_ITEM', payload: cookie });
         setModalAdded(true);
-        setTimeout(() => setModalAdded(false), 2000);
+        setTimeout(() => setModalAdded(false), 800);
     };
 
     return (
@@ -126,7 +130,7 @@ export default function CookieCard() {
             <div id="flavors-of-the-month" className="bg-[#FFF8E2] rounded-lg p-8 md:m-8 flex flex-col items-center z-20">
                 <h2 className="text-5xl md:text-7xl italic mb-4 text-center">Flavors of the Month</h2>
                 <p className="text-center text-lg mb-18">
-                    Here is our curated selection of cookies for the month of July!
+                    Here is our curated selection of cookies for the month of February!
                 </p>
                 <div className='space-y-12'>
                     {cookiesData.map((cookie: Cookie, index: number) => (

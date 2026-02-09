@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaHome, FaShoppingCart } from 'react-icons/fa';
@@ -13,7 +13,12 @@ interface NavbarProps {
 
 export default function Navbar({ showOrderButton = true, homeButton = false }: NavbarProps) {
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const { state } = useCart();
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleOrderNow = (): void => {
         const isAtHome = (): boolean => {
@@ -43,6 +48,9 @@ export default function Navbar({ showOrderButton = true, homeButton = false }: N
     
     
     const totalItems = state.items.reduce((sum, item) => sum + item.quantity, 0);
+
+    // Only show cart badge after hydration to avoid mismatch
+    const showCartBadge = mounted && totalItems > 0;
 
     return (
         <>
@@ -80,7 +88,7 @@ export default function Navbar({ showOrderButton = true, homeButton = false }: N
                         aria-label="Shopping cart"
                     >
                         <FaShoppingCart className="w-6 h-6" />
-                        {totalItems > 0 && (
+                        {showCartBadge && (
                             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                                 {totalItems}
                             </span>
@@ -108,7 +116,12 @@ export default function Navbar({ showOrderButton = true, homeButton = false }: N
                     </div>
 
                     <div className="flex-1 overflow-y-auto p-4">
-                        {state.items.length === 0 ? (
+                        {!mounted ? (
+                            // Show empty state during SSR to match server
+                            <div className="text-center text-gray-500 mt-8">
+                                <p>Your cart is empty!</p>
+                            </div>
+                        ) : state.items.length === 0 ? (
                             <div className="text-center text-gray-500 mt-8">
                                 <p>Your cart is empty!</p>
                                 <button
@@ -144,7 +157,7 @@ export default function Navbar({ showOrderButton = true, homeButton = false }: N
                         )}
                     </div>
 
-                    {state.items.length > 0 && (
+                    {mounted && state.items.length > 0 && (
                         <div className="border-t p-4 bg-gray-50">
                             <div className="flex justify-between text-lg font-semibold mb-4">
                                 <span>Total:</span>

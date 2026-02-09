@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
+import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
 import { Cookie } from './CookieCards';
 import { FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
 import Image from 'next/image';
@@ -127,7 +127,28 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 
 // Cart provider component
 export function CartProvider({ children }: { children: ReactNode }) {
-    const [state, dispatch] = useReducer(cartReducer, initialState);
+    const [state, dispatch] = useReducer(cartReducer, initialState, (initial) => {
+        // Load cart from localStorage on initialization
+        if (typeof window !== 'undefined') {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                try {
+                    const parsed = JSON.parse(savedCart);
+                    return { ...initial, items: parsed.items || [], total: parsed.total || 0 };
+                } catch {
+                    return initial;
+                }
+            }
+        }
+        return initial;
+    });
+
+    // Save cart to localStorage whenever it changes
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            localStorage.setItem('cart', JSON.stringify({ items: state.items, total: state.total }));
+        }
+    }, [state.items, state.total]);
 
     return (
         <CartContext.Provider value={{ state, dispatch }}>
