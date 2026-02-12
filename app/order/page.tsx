@@ -137,6 +137,15 @@ const OrderPage = () => {
         setSubmitStatus({ type: null, message: '' });
 
         try {
+            // Validate environment variables first
+            const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+            const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+            const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+            
+            if (!serviceId || !templateId || !publicKey) {
+                throw new Error('EmailJS environment variables are not properly configured');
+            }
+
             // Generate a random order ID (8 uppercase alphanumeric characters)
             const orderId = Math.random().toString(36).substr(2, 8).toUpperCase();
 
@@ -159,13 +168,15 @@ const OrderPage = () => {
                         name: item.name,
                         units: item.quantity,
                         price: getItemPrice(item.quantity).toFixed(2),
-                        image_url: item.image,
+                        image_url: `https://bakedwithblessings.com/${item.image}`,
                     })),
                     cost: {
                         total: state.total.toFixed(2)
                     },
                 },
-                process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
+                {
+                    publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+                }
             );
 
             setSubmitStatus({
@@ -184,9 +195,13 @@ const OrderPage = () => {
             });
             dispatch({ type: 'CLEAR_CART' });
         } catch (error) {
+            console.error('EmailJS Error:', error);
+            console.error('Error type:', typeof error);
+            console.error('Error message:', error instanceof Error ? error.message : 'No message');
+            
             setSubmitStatus({
                 type: 'error',
-                message: 'There was an error placing your order. Please try again or contact us directly.',
+                message: `There was an error placing your order. ${error instanceof Error ? error.message : 'Please try again or contact us directly.'}`,
             });
         } finally {
             setIsSubmitting(false);

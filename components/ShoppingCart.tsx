@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, ReactNode, useEffect, useState } from 'react';
 import { Cookie } from './CookieCards';
 import { FaTrash, FaPlus, FaMinus } from 'react-icons/fa';
 import Image from 'next/image';
@@ -20,7 +20,8 @@ type CartAction =
     | { type: 'ADD_ITEM'; payload: Cookie }
     | { type: 'REMOVE_ITEM'; payload: number }
     | { type: 'UPDATE_QUANTITY'; payload: { id: number; quantity: number } }
-    | { type: 'CLEAR_CART' };
+    | { type: 'CLEAR_CART' }
+    | { type: 'LOAD_CART'; payload: { items: CartItem[]; total: number } };
 
 // Create cart context
 const CartContext = createContext<{
@@ -120,6 +121,12 @@ function cartReducer(state: CartState, action: CartAction): CartState {
                 total: 0,
                 isOpen: false
             };
+        case 'LOAD_CART':
+            return {
+                ...state,
+                items: action.payload.items,
+                total: action.payload.total
+            };
         default:
             return state;
     }
@@ -127,28 +134,31 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 
 // Cart provider component
 export function CartProvider({ children }: { children: ReactNode }) {
-    const [state, dispatch] = useReducer(cartReducer, initialState, (initial) => {
-        // Load cart from localStorage on initialization
+    const [state, dispatch] = useReducer(cartReducer, initialState);
+    const [mounted, setMounted] = useState(false);
+
+    // Load cart from localStorage after mount
+    useEffect(() => {
+        setMounted(true);
         if (typeof window !== 'undefined') {
             const savedCart = localStorage.getItem('cart');
             if (savedCart) {
                 try {
                     const parsed = JSON.parse(savedCart);
-                    return { ...initial, items: parsed.items || [], total: parsed.total || 0 };
+                    dispatch({ type: 'LOAD_CART', payload: { items: parsed.items || [], total: parsed.total || 0 } });
                 } catch {
-                    return initial;
+                    // Keep initial state
                 }
             }
         }
-        return initial;
-    });
+    }, []);
 
-    // Save cart to localStorage whenever it changes
+    // Save cart to localStorage whenever it changes (only after mount)
     useEffect(() => {
-        if (typeof window !== 'undefined') {
+        if (mounted && typeof window !== 'undefined') {
             localStorage.setItem('cart', JSON.stringify({ items: state.items, total: state.total }));
         }
-    }, [state.items, state.total]);
+    }, [state.items, state.total, mounted]);
 
     return (
         <CartContext.Provider value={{ state, dispatch }}>
@@ -169,6 +179,11 @@ export function useCart() {
 // Cart component
 export default function ShoppingCart() {
     const { state, dispatch } = useCart();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleOrderNow = (): void => {
         const isAtHome = (): boolean => {
@@ -195,6 +210,19 @@ export default function ShoppingCart() {
             window.location.href = `${window.location.origin}/#flavors-of-the-month`;
         }
     };
+
+    // Prevent hydration mismatch by rendering consistent placeholder during SSR
+    if (!mounted) {
+        return (
+            <div className='sticky top-16'>
+                <div className="bg-white rounded-lg shadow-lg p-6">
+                    <h3 className="text-2xl font-semibold mb-4">Your Cart</h3>
+                    <p className="text-gray-500">Your cart is empty!</p>
+                </div>
+                <PickupInfoCard />
+            </div>
+        );
+    }
 
     return (
         <div className='sticky top-16'>
