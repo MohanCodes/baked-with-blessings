@@ -28,15 +28,14 @@ const cookiesData: Cookie[] = [
         gallery: ["/cookies/ban-cru-1.jpg", "/cookies/ban-cru-2.jpg", "/cookies/ban-cru-3.jpg"],
         backgroundColor: "#f7dc6f",
         ingredients: [
-            "Bananas",
-            "Cream cheese",
             "Butter",
-            "Flour",
-            "Cinnamon",
             "Sugar",
+            "AP flour",
             "Eggs",
+            "Banana",
+            "Cinnamon",
             "Cream cheese",
-            "Cocoa powder"
+            "Heavy cream"
         ],
         allergens: ["Gluten", "Dairy", "Eggs", "Tree Nuts"]
     },
@@ -49,15 +48,15 @@ const cookiesData: Cookie[] = [
         gallery: ["/cookies/red-vel-1.jpg", "/cookies/red-vel-2.jpg", "/cookies/red-vel-3.jpg"],
         backgroundColor: "#f7e1d1",
         ingredients: [
-            "Butter",
-            "Sugar",
-            "Eggs",
+            "Cocoa powder",
             "Flour",
+            "Sugar",
+            "White chocolate",
             "Oreos",
             "Cream cheese",
-            "White chocolate"
+            "Butter"
         ],
-        allergens: ["Gluten", "Dairy", "Eggs"]
+        allergens: ["Gluten", "Dairy", "Eggs", "Tree Nuts"]
     },
     {
         id: 3,
@@ -68,15 +67,14 @@ const cookiesData: Cookie[] = [
         gallery: ["/cookies/dubai-1.jpg", "/cookies/dubai-2.jpg", "/cookies/dubai-3.jpg"],
         backgroundColor: "#cde5c7",
         ingredients: [
+            "Cocoa powder",
             "Marshmallows",
+            "Knafeh",
             "Pistachios",
             "Cream cheese",
-            "Butter",
-            "Flour",
-            "Knafeh",
-            "Cocoa powder"
+            "Butter"
         ],
-        allergens: ["Gluten", "Dairy", "Eggs", "Peanuts", "Tree Nuts"]
+        allergens: ["Gluten", "Dairy", "Eggs", "Tree Nuts"]
     },
 ];
 
